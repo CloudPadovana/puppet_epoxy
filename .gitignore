@@ -1,5 +1,4 @@
 *~
-controller_epoxy/manifests/params.pp
 controller_epoxy/files/id_rsa_ctrl-01
 controller_epoxy/files/id_rsa_controller-01
 controller_epoxy/files/id_rsa_cloudtest
@@ -10,7 +9,6 @@ controller_epoxy/files/ceph.client.cinder-prod.keyring
 controller_epoxy/files/ceph.client.cinder-cloudtest.keyring
 controller_epoxy/files/ceph.client.glance-prod.keyring
 controller_epoxy/files/ceph.client.glance-cloudtest.keyring
-compute_epoxy/manifests/params.pp
 compute_epoxy/files/CloudVenetoCAs.pem
 compute_epoxy/files/id_rsa_ctrl-01
 compute_epoxy/files/id_rsa_controller-01
