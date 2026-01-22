@@ -6,6 +6,9 @@ class controller_epoxy::configure_ec2 inherits controller_epoxy::params {
 # 
 ### FF da queens per i metadata deve modificare anche il file /etc/neutron/metadata_agent.ini
 
+##
+# FF aggiungo questa riga di test
+##
 
 file { ['/var/lib/ec2-api',
        '/var/lib/ec2-api/tmp']:
