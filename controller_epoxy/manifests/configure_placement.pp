@@ -1,5 +1,5 @@
 class controller_epoxy::configure_placement inherits controller_epoxy::params {
-
+#
 #
 # Questa classe:
 # - popola il file /etc/placement/placement.conf
