@@ -1,6 +1,7 @@
 class compute_epoxy::nova inherits compute_epoxy::params {
 #($compute_epoxy::params::cloud_role) inherits compute_epoxy::params {
 
+
 #include compute_epoxy::params
 include compute_epoxy::install
 
