@@ -1,5 +1,6 @@
 class controller_epoxy::service inherits controller_epoxy::params {
-  
+
+
  ## Services
 
  service { "memcached":
