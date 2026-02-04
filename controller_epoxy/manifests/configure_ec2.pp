@@ -8,6 +8,7 @@ class controller_epoxy::configure_ec2 inherits controller_epoxy::params {
 
 ##
 # FF aggiungo questa riga di test
+# e anche un'altra
 ##
 
 file { ['/var/lib/ec2-api',
