@@ -1,5 +1,6 @@
 class compute_epoxy::neutron inherits compute_epoxy::params {
 
+
 # include compute_epoxy::params
  include compute_epoxy::install
 
