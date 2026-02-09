@@ -90,13 +90,12 @@ body: The registered user {{ username }} requires the creation of a new project 
 LOG: Creation of project {{ project }} rejected by {{ log.user_name }}
 subject: Request for a new project has been rejected
 body: The cloud administrator rejected the creation of project {{ project }}
-  {{ notes }}
+  {% if notes %}{{ notes }}{% endif %}
   
   Please, don't reply to this message
 
 [registration_available]
 LOG: Registration request of user {{ username }} and {% if project_creation %}creation of{% else %}affiliation to{% endif %} {{ projects|join:', ' }} available
-  {% if notes %}Notes: {{ notes }}{% endif %}
   {% if contactper %}Contact person: {{ contactper }}{% endif %}
 subject: New request for registration available ({{ username }})
 body: A new request for registration is available
@@ -171,6 +170,8 @@ LOG: Sent account expiration notice to {{ username }}
 subject: Affiliation to {{ project }} is going to expire
 body: Your affiliation to the project {{ project }} will expire in {{ days }} days.
   If you wish to renew the affiliation please open the CloudVeneto dashboard in a browser and select the project: {{ project }}.
+  {% if notes %}The user sent you this comment:
+  {{ notes }}{% endif %}
   
   Please, don't reply to this message
 
@@ -222,6 +223,15 @@ body: Your affiliation to the project {{ project }} will expire in 30 days.
   
   Please, don't reply to this message
 
+[renewal_discarded]
+LOG: Renewal for {{ username }} discarded from {{ project }} by {{ log.user_name }}
+subject: Renewal rejected for project {{ project }}
+body: The renewal for the project {{ project }} has been rejected.
+  {% if notes %}{{ notes }}{% endif %}
+  For further information please contact {{ admin_address }}
+  
+  Please, don't reply to this message
+
 [deleted_users_summary]
 subject: Summary of the expired users
 body: The following project memberships have been deleted: 
@@ -250,6 +260,14 @@ body: A proposed promotion is avaliable for user {{ username }} as administrator
 LOG: Promotion rejected for {{ username }} within project {{ project }}
 subject: Promotion rejected for {{ username }} in project {{ project }}
 body: The promotion of the user {{ username }} as administrator of the project {{ project }} has been rejected by Cloud Administrators.
+  
+  Please, don't reply to this message
+
+[project_newexpiration]
+LOG: New expiration for project {{ project }}
+subject: New expiration for project {{ project }}
+body: The expiration for project {{ project }} has been update.
+  The new expiration is {{ expiration }}.
   
   Please, don't reply to this message
 
