@@ -3,7 +3,9 @@ class controller_epoxy::configure_heat inherits controller_epoxy::params {
 #
 # Questa classe:
 # - popola il file /etc/heat/heat.conf
-# - usa file di policy /file/heat.policy.yaml 
+# - usa file di policy /file/heat.policy.yaml
+
+### fastidio FF 
   
 define do_config ($conf_file, $section, $param, $value) {
              exec { "${name}":
