@@ -17,7 +17,7 @@ $cloud_role = $compute_epoxy::cloud_role
   $oldrelease = [ 'centos-release-openstack-caracal',
                 ]
 
-  $newrelease =  'centos-release-openstack-epoxy'
+  $newrelease =  'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm'
 
   $yumutils = 'yum-utils'
 
@@ -78,7 +78,7 @@ $cloud_role = $compute_epoxy::cloud_role
 # Esegue yum clean all once (lo si fa a meno che non stiamo gia` usando il repo epoxy)
   exec { "clean repo cache":
          command => "/usr/bin/yum clean all",
-         unless => "/bin/rpm -q centos-release-openstack-epoxy",
+         unless => "/bin/rpm -q rdo-release-epoxy",
   } ->
 
   package { $newrelease :
@@ -88,7 +88,7 @@ $cloud_role = $compute_epoxy::cloud_role
   ### negli update si consiglia di disabilitare EPEL (epel-next e' l'unico abilitato da disabilitare) 
   exec { "yum disable EPEL repo":
          command => "/usr/bin/yum-config-manager --disable epel\\*",
-         onlyif => "/bin/rpm -qa | grep centos-release-openstack-epoxy && /usr/bin/yum repolist enabled | grep epel",
+         onlyif => "/bin/rpm -qa | grep rdo-release-epoxy && /usr/bin/yum repolist enabled | grep epel",
          timeout => 3600,
          require => Package[$yumutils],
   } -> 
