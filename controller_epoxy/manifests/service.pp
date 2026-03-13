@@ -1,6 +1,6 @@
 class controller_epoxy::service inherits controller_epoxy::params {
   
- ## Services
+ ## Services prova Fede
 
  service { "memcached":
                    ensure      => stopped,
