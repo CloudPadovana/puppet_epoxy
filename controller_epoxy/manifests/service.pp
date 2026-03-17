@@ -33,7 +33,7 @@ file { "/etc/cron.d/fetch-crl":
  # Services for Shibboleth
     service { "shibd":
                    ensure     => running,
-                   enable     => tru,
+                   enable     => true,
                    hasstatus  => true,
                    hasrestart => true,
                    subscribe  => Class['controller_epoxy::configure_shibboleth'],
@@ -42,7 +42,7 @@ file { "/etc/cron.d/fetch-crl":
  # Services for Glance
     service { "openstack-glance-api":
                    ensure      => running,
-                   enable      => tru,
+                   enable      => true,
                    hasstatus   => true,
                    hasrestart  => true,
                    subscribe   => Class['controller_epoxy::configure_glance'],
