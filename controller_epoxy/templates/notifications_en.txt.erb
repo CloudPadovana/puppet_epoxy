@@ -227,13 +227,13 @@ subject: Proposed renewal to {{ username }} for project {{ project }}
 body: Your affiliation to the project {{ project }} will expire in 30 days.
   If you wish to renew the affiliation please open the CloudVeneto dashboard in a browser and select the project: {{ project }}.
   The renewal procedure will be proposed to you.
-   {% if resources %}If you decide to give up you must delete the following resources:{% endif %}
-   {% for instance in instances %}
-     Instance {{ instance }}
-   {% endfor %}
-   {% for volume in volumes %}
-     Volume {{ volume }}
-   {% endfor %}
+  {% if resources %}If you decide to give up you must delete the following resources:{% endif %}
+  {% for instance in instances %}
+    Instance {{ instance }}
+  {% endfor %}
+  {% for volume in volumes %}
+    Volume {{ volume }}
+  {% endfor %}
   
   Please, don't reply to this message
 
