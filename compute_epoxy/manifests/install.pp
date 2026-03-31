@@ -19,8 +19,8 @@ $cloud_role = $compute_epoxy::cloud_role
 
   $newrelease =  'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm'
 
-  $releaseepoxy = [ 'rdo-release',
-                  ]
+  $releaseepoxy = 'rdo-release'
+                  
 
   $yumutils = 'yum-utils'
 
