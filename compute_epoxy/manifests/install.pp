@@ -160,19 +160,19 @@ $cloud_role = $compute_epoxy::cloud_role
 ## Install generic packages
   package { $genericpackages: 
     ensure => "installed",
-    require => Package[rdo-release]
+    require => Package['rdo-release']
     #require => Package[$newrelease]
    } ->
 
   package { $neutronpackages: 
     ensure => "installed",
-    require => Package[rdo-release]
+    require => Package['rdo-release']
     #require => Package[$newrelease]
   } ->
 
   package { $novapackages: 
     ensure => "installed",
-    require => Package[rdo-release]
+    require => Package['rdo-release']
     #require => Package[$newrelease]
   } ->
 
