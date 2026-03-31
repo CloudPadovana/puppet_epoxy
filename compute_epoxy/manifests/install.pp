@@ -84,8 +84,11 @@ $cloud_role = $compute_epoxy::cloud_role
          unless => "/bin/rpm -q rdo-release-epoxy",
   } ->
 
-  package { $newrelease :
-    ensure => 'installed',
+  exec { "rpm install rdo-release":
+             command => "/usr/bin/yum install -y https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm",
+             unless => "/bin/rpm -qa | grep rdo-release-epoxy",
+             timeout => 3600,
+
   } ->
 
   ### negli update si consiglia di disabilitare EPEL (epel-next e' l'unico abilitato da disabilitare) 
