@@ -100,13 +100,15 @@ $cloud_role = $compute_epoxy::cloud_role
   } ->
 
   exec { "yum update to Epoxy in DELL hosts":
-         command => "/usr/bin/yum -y update --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent --disablerepo centos-ceph-reef",
+#         command => "/usr/bin/yum -y update --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent --disablerepo centos-ceph-reef",
+         command => "/usr/bin/yum -y update",
          onlyif => "/bin/rpm -qi dell-system-update | grep 'Architecture:' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'caracal'",
          timeout => 3600,
   } ->
 
   exec { "yum update to Epoxy in non DELL hosts":
-         command => "/usr/bin/yum -y update --disablerepo centos-ceph-reef",
+#         command => "/usr/bin/yum -y update --disablerepo centos-ceph-reef",
+         command => "/usr/bin/yum -y update",
          onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'caracal'",
          timeout => 3600,
   } ->
