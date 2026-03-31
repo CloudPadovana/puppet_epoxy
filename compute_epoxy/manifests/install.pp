@@ -119,9 +119,21 @@ $cloud_role = $compute_epoxy::cloud_role
          require => Package[$yumutils],
   } -> 
 
-  exec { "yum update for Ceph from Yoga to Epoxy enabling epel":
-         command => "/usr/bin/yum -y update *ceph-common-18.2.5* --enablerepo=epel",
-         onlyif => "/usr/bin/yum list installed | grep ceph-common | grep -i 'pacific'",
+#  exec { "yum update for Ceph from Yoga to Epoxy enabling epel":
+#         command => "/usr/bin/yum -y update *ceph-common-18.2.5* --enablerepo=epel",
+#         onlyif => "/usr/bin/yum list installed | grep ceph-common | grep -i 'pacific'",
+#         timeout => 3600,
+#  } ->
+
+  exec { "rpm remove python3-requests python3-oslo-messaging+amqp1":
+         command ==> "/bin/rpm -e --nodeps python3-requests+use_chardet_on_py3-2.31.0-3.el9s.noarch",
+         onlyif => "/usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'caracal'",
+         timeout => 3600,
+  } ->
+
+  exec { "rpm remove python3-requests python3-oslo-messaging+amqp1":
+         command ==> "/bin/rpm -e --nodeps python3-oslo-messaging+amqp1", 
+         onlyif => "/usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'caracal'",
          timeout => 3600,
   } ->
 
