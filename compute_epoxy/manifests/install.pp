@@ -19,6 +19,8 @@ $cloud_role = $compute_epoxy::cloud_role
 
   $newrelease =  'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm'
 
+  $releaseepoxy = [ 'rdo-release' ,]
+
   $yumutils = 'yum-utils'
 
   $genericpackages = [ "crudini",
@@ -160,19 +162,19 @@ $cloud_role = $compute_epoxy::cloud_role
 ## Install generic packages
   package { $genericpackages: 
     ensure => "installed",
-    require => Package['rdo-release']
+    require => Package[$releaseepoxy]
     #require => Package[$newrelease]
    } ->
 
   package { $neutronpackages: 
     ensure => "installed",
-    require => Package['rdo-release']
+    require => Package[$releaseepoxy]
     #require => Package[$newrelease]
   } ->
 
   package { $novapackages: 
     ensure => "installed",
-    require => Package['rdo-release']
+    require => Package[$releaseepoxy]
     #require => Package[$newrelease]
   } ->
 
