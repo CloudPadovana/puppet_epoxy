@@ -21,6 +21,9 @@ $cloud_role = $compute_epoxy::cloud_role
 
 #  $releaseepoxy = 'rdo-release'
                   
+  $file_path = '/tmp/rdo-release.rpm'
+  $url = 'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm'
+
 
   $yumutils = 'yum-utils'
 
@@ -84,16 +87,29 @@ $cloud_role = $compute_epoxy::cloud_role
          unless => "/bin/rpm -q rdo-release-epoxy",
   } ->
 
+  file { $file_path:
+     ensure => file,
+     source => $url,
+  } ->
+
+  package { 'rdo-release':
+     ensure   => installed,
+     provider => rpm,
+     source   => $file_path,
+     require  => File[$file_path],
+  } ->
+
 #  exec { "rpm install rdo-release":
 #             command => "/usr/bin/yum install -y https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm",
 #             unless => "/bin/rpm -qa | grep rdo-release-epoxy",
 #             timeout => 3600,
+#  } ->
 
-  package { 'rdo-release':
-     ensure   => installed,
-     name     => 'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm',
-     provider => 'yum',
-  } ->
+#  package { 'rdo-release':
+#     ensure   => installed,
+#     name     => 'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm',
+#     provider => 'yum',
+#  } ->
 
   ### negli update si consiglia di disabilitare EPEL (epel-next e' l'unico abilitato da disabilitare) 
   exec { "yum disable EPEL repo":
