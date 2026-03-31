@@ -17,9 +17,9 @@ $cloud_role = $compute_epoxy::cloud_role
   $oldrelease = [ 'centos-release-openstack-caracal',
                 ]
 
-  $newrelease =  'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm'
+#  $newrelease =  'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm'
 
-  $releaseepoxy = 'rdo-release'
+#  $releaseepoxy = 'rdo-release'
                   
 
   $yumutils = 'yum-utils'
@@ -84,11 +84,15 @@ $cloud_role = $compute_epoxy::cloud_role
          unless => "/bin/rpm -q rdo-release-epoxy",
   } ->
 
-  exec { "rpm install rdo-release":
-             command => "/usr/bin/yum install -y https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm",
-             unless => "/bin/rpm -qa | grep rdo-release-epoxy",
-             timeout => 3600,
+#  exec { "rpm install rdo-release":
+#             command => "/usr/bin/yum install -y https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm",
+#             unless => "/bin/rpm -qa | grep rdo-release-epoxy",
+#             timeout => 3600,
 
+  package { 'rdo-release':
+     ensure   => installed,
+     name     => 'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm',
+     provider => 'yum',
   } ->
 
   ### negli update si consiglia di disabilitare EPEL (epel-next e' l'unico abilitato da disabilitare) 
@@ -166,17 +170,17 @@ $cloud_role = $compute_epoxy::cloud_role
 ## Install generic packages
   package { $genericpackages: 
     ensure => "installed",
-    require => Package[$releaseepoxy]
+    require => Package['rdo-release']
    } ->
 
   package { $neutronpackages: 
     ensure => "installed",
-    require => Package[$releaseepoxy]
+    require => Package['rdo-release']
   } ->
 
   package { $novapackages: 
     ensure => "installed",
-    require => Package[$releaseepoxy]
+    require => Package['rdo-release']
   } ->
 
   file_line { '/etc/sudoers.d/neutron  syslog':
