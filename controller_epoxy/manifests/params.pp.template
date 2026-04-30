@@ -258,7 +258,7 @@ class controller_epoxy::params ($cloud_role){
    $enable_fip_topology_check = 'False'
    $enabled_apis = 'osapi_compute,metadata'
    $enabled_filters   = 'AggregateMultiTenancyIsolation,AggregateInstanceExtraSpecsFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,PciPassthroughFilter,NUMATopologyFilter'
-   $enable_proxy_headers_parsing = true
+   $enable_proxy_headers_parsing = false 
    $flavor = 'keystone'
    $glance_image_size_cap = '55000000000'
    $glance_api_default_store = 'rbd'

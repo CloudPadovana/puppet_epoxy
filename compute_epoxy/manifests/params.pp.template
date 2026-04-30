@@ -113,7 +113,7 @@ w
   $enable_ipset            = true
   $enable_security_group   = true
   $enable_tunneling        = true       
-  $enable_proxy_headers_parsing = true
+  $enable_proxy_headers_parsing = false 
   $libvirt_cpu_mode        = 'host-passthrough'
   $libvirt_inject_key      = true
   $libvirt_inject_part     = '-1'     
