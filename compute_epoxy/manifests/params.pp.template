@@ -85,7 +85,8 @@ if $::compute_epoxy::cloud_role == "is_prod_localstorage" or $::compute_epoxy::c
   $nova_transport_url = 'rabbit://openstack:'   
   $neutron_transport_url = 'rabbit://openstack:'   
   $transport_url = 'rabbit://openstack:'   
-  $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:443'
+  #$www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:443'
+  $www_authenticate_uri = 'http://xxx.xxx.xxx.xxx:5000'
 }                              }
 
    ### Setting validi sia per la cloud di test che per quella di produzione
