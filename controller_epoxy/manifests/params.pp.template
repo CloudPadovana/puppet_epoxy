@@ -207,8 +207,8 @@ class controller_epoxy::params ($cloud_role){
    $transport_url = ''
    $vip_mgmt = ''
    $vip_pub = ''
-   #$www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:443'    
-   $www_authenticate_uri = 'http://xxx.xxx.xxx.xxx:5000'    
+   $www_authenticate_uri = 'https://xxx.xxx.xxx.xxx:443'    
+   #$www_authenticate_uri = 'http://xxx.xxx.xxx.xxx:5000'    
    }
 
    ##########################################
