@@ -270,19 +270,16 @@ class controller_epoxy::params ($cloud_role){
    $glance_api_enabled_backends	= 'http:http,rbd:rbd'
    $glance_api_filesystem_store_datadir = '/Images/staging/'
    $glance_log_dir = '/var/log/glance'
-   ### FF per Caracal #################
-   $glance_policy_file = '/etc/glance/glancepolicyold.yaml'
+   $glance_policy_file = '/etc/glance/policy.yaml'
    $glance_enforce_scope = true
    $glance_enforce_new_defaults = true
-   #####################################
    $glance_service_token_roles_required = true
    $glance_store_datadir = '/var/lib/glance/images/'
    $glance_username = 'glance'
+   $heat_enable_proxy_headers_parsing = true 
    $heat_endpoint_type = 'publicURL'
    $heat_insecure = true
-   ## FF per epoxy
    $heat_policy_file = '/etc/heat/policy.yaml'
-   ###
    $heat_service_token_roles_required = true
    $heat_stack_domain_admin = 'heat_domain_admin'
    $heat_stack_user_domain_name = 'heat'
@@ -299,9 +296,7 @@ class controller_epoxy::params ($cloud_role){
    $keystone_token_provider = 'fernet'
    $ml2_enable_ipset = true
    $ml2_enable_security_group = true
-   ### FF per Caracal
    $ml2_extension_drivers = 'port_security'
-   ###
    # Shorter name for ml2_firewall_driver                                                      
    #$ml2_firewall_driver = 'iptables_hybrid'
    $ml2_firewall_driver = 'neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver'    
@@ -334,9 +329,7 @@ class controller_epoxy::params ($cloud_role){
    $neutron_dhcp_agent_service_limit = '10000'
    $neutron_openvswitch_agent_service_limit = '10000'
    $neutron_server_service_limit = '10000'
-   ## FF per epoxy
    $neutron_policy_file = '/etc/neutron/policy.yaml'
-   ###
    $nova_cinder_catalog_info = 'volumev3::internalURL'
    $nova_cpu_allocation_ratio = '4.0'
    $nova_default_schedule_zone = 'nova'

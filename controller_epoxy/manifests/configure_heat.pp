@@ -361,7 +361,7 @@ define remove_config ($conf_file, $section, $param, $value) {
     conf_file => '/etc/heat/heat.conf',
     section   => 'oslo_middleware',
     param     => 'enable_proxy_headers_parsing',
-    value     => $controller_epoxy::params::enable_proxy_headers_parsing,
+    value     => $controller_epoxy::params::heat_enable_proxy_headers_parsing,
   }
 
   controller_epoxy::configure_heat::do_config { 'heat_policy_file': 
