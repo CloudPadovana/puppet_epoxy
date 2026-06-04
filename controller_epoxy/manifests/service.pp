@@ -1,6 +1,6 @@
 class controller_epoxy::service inherits controller_epoxy::params {
   
- ## Services
+ ## Services nuovo test
 
  service { "memcached":
                    ensure      => running,
@@ -78,22 +78,6 @@ file { "/etc/cron.d/fetch-crl":
                    subscribe   => Class['controller_epoxy::configure_nova'],
            }
  
-
-# # Services for ec2       
-#    service { "openstack-ec2-api":
-#                   ensure      => running,
-#                   enable      => true,
-#                   hasstatus   => true,
-#                   hasrestart  => true,
-#                   subscribe   => Class['controller_epoxy::configure_ec2'],
-#           }
-#    service { "openstack-ec2-api-metadata":
-#                   ensure      => running,
-#                   enable      => true,
-#                   hasstatus   => true,
-#                   hasrestart  => true,
-#                   subscribe   => Class['controller_epoxy::configure_ec2'],
-#           }
 
  # Services for neutron       
     service { "openvswitch":

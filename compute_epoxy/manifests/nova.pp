@@ -364,6 +364,22 @@ compute_epoxy::nova::do_config { 'pci_device_spec': conf_file => '/etc/nova/nova
 
 }
 
+
+# GPU specific settings for cld-nl-gpu-01..04
+
+if $::mgmtnw_ip in ["192.168.60.153", "192.168.60.154", "192.168.60.155", "192.168.60.156"]{
+
+compute_epoxy::nova::do_config { 'pci_device_spec': conf_file => '/etc/nova/nova.conf', section => 'pci', param => 'device_spec', value => $compute_epoxy::params::pci_device_spec, }
+
+   compute_epoxy::nova::do_config_list { "pci_alias":
+           conf_file => '/etc/nova/nova.conf',
+           section   => 'pci',
+           param     => 'alias',
+           values    => [ "$compute_epoxy::params::pci_RTX6000" ],
+         }
+}
+
+
 # GPU specific settings for cld-dfa-gpu-06
 
 if ($::mgmtnw_ip == "192.168.60.110") {

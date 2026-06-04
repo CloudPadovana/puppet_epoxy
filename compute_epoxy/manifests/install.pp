@@ -17,7 +17,13 @@ $cloud_role = $compute_epoxy::cloud_role
   $oldrelease = [ 'centos-release-openstack-caracal',
                 ]
 
-  $newrelease =  'centos-release-openstack-epoxy'
+#  $newrelease =  'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm'
+
+#  $releaseepoxy = 'rdo-release'
+                  
+  $file_path = '/tmp/rdo-release.rpm'
+  $url = 'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm'
+
 
   $yumutils = 'yum-utils'
 
@@ -78,35 +84,69 @@ $cloud_role = $compute_epoxy::cloud_role
 # Esegue yum clean all once (lo si fa a meno che non stiamo gia` usando il repo epoxy)
   exec { "clean repo cache":
          command => "/usr/bin/yum clean all",
-         unless => "/bin/rpm -q centos-release-openstack-epoxy",
+         unless => "/bin/rpm -q rdo-release-epoxy",
   } ->
 
-  package { $newrelease :
-    ensure => 'installed',
+  file { $file_path:
+     ensure => file,
+     source => $url,
   } ->
+
+  package { 'rdo-release':
+     ensure   => installed,
+     provider => rpm,
+     source   => $file_path,
+     require  => File[$file_path],
+  } ->
+
+#  exec { "rpm install rdo-release":
+#             command => "/usr/bin/yum install -y https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm",
+#             unless => "/bin/rpm -qa | grep rdo-release-epoxy",
+#             timeout => 3600,
+#  } ->
+
+#  package { 'rdo-release':
+#     ensure   => installed,
+#     name     => 'https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm',
+#     provider => 'yum',
+#  } ->
 
   ### negli update si consiglia di disabilitare EPEL (epel-next e' l'unico abilitato da disabilitare) 
   exec { "yum disable EPEL repo":
          command => "/usr/bin/yum-config-manager --disable epel\\*",
-         onlyif => "/bin/rpm -qa | grep centos-release-openstack-epoxy && /usr/bin/yum repolist enabled | grep epel",
+         onlyif => "/bin/rpm -qa | grep rdo-release-epoxy && /usr/bin/yum repolist enabled | grep epel",
          timeout => 3600,
          require => Package[$yumutils],
   } -> 
 
-  exec { "yum update for Ceph from Yoga to Epoxy enabling epel":
-         command => "/usr/bin/yum -y update *ceph-common-18.2.5* --enablerepo=epel",
-         onlyif => "/usr/bin/yum list installed | grep ceph-common | grep -i 'pacific'",
+#  exec { "yum update for Ceph from Yoga to Epoxy enabling epel":
+#         command => "/usr/bin/yum -y update *ceph-common-18.2.5* --enablerepo=epel",
+#         onlyif => "/usr/bin/yum list installed | grep ceph-common | grep -i 'pacific'",
+#         timeout => 3600,
+#  } ->
+
+  exec { "rpm remove python3-requests":
+         command => "/bin/rpm -e --nodeps python3-requests+use_chardet_on_py3-2.31.0-3.el9s.noarch",
+         onlyif => "/usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'caracal'",
+         timeout => 3600,
+  } ->
+
+  exec { "rpm remove python3-oslo-messaging+amqp1":
+         command => "/bin/rpm -e --nodeps python3-oslo-messaging+amqp1", 
+         onlyif => "/usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'caracal'",
          timeout => 3600,
   } ->
 
   exec { "yum update to Epoxy in DELL hosts":
-         command => "/usr/bin/yum -y update --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent --disablerepo centos-ceph-reef",
+#         command => "/usr/bin/yum -y update --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent --disablerepo centos-ceph-reef",
+         command => "/usr/bin/yum -y update",
          onlyif => "/bin/rpm -qi dell-system-update | grep 'Architecture:' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'caracal'",
          timeout => 3600,
   } ->
 
   exec { "yum update to Epoxy in non DELL hosts":
-         command => "/usr/bin/yum -y update --disablerepo centos-ceph-reef",
+#         command => "/usr/bin/yum -y update --disablerepo centos-ceph-reef",
+         command => "/usr/bin/yum -y update",
          onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'caracal'",
          timeout => 3600,
   } ->
@@ -158,17 +198,17 @@ $cloud_role = $compute_epoxy::cloud_role
 ## Install generic packages
   package { $genericpackages: 
     ensure => "installed",
-    require => Package[$newrelease]
+    require => Package['rdo-release']
    } ->
 
   package { $neutronpackages: 
     ensure => "installed",
-    require => Package[$newrelease]
+    require => Package['rdo-release']
   } ->
 
   package { $novapackages: 
     ensure => "installed",
-    require => Package[$newrelease]
+    require => Package['rdo-release']
   } ->
 
   file_line { '/etc/sudoers.d/neutron  syslog':

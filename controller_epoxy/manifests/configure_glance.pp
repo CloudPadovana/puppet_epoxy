@@ -14,8 +14,8 @@ class controller_epoxy::configure_glance inherits controller_epoxy::params {
             owner    => "root",
             group    => "glance",
             mode     => "0640",
-            path     => '/etc/glance/glancepolicyold.yaml',
-            source  => "puppet:///modules/controller_epoxy/glancepolicyold.yaml",
+            path     => '/etc/glance/policy.yaml',
+            source  => "puppet:///modules/controller_epoxy/glance.policy.yaml",
           }
           
   

@@ -3,7 +3,9 @@ class controller_epoxy::configure_heat inherits controller_epoxy::params {
 #
 # Questa classe:
 # - popola il file /etc/heat/heat.conf
-# - usa file di policy /file/heat.policy.yaml 
+# - usa file di policy /file/heat.policy.yaml
+
+### fastidio FF 
   
 define do_config ($conf_file, $section, $param, $value) {
              exec { "${name}":
@@ -359,7 +361,7 @@ define remove_config ($conf_file, $section, $param, $value) {
     conf_file => '/etc/heat/heat.conf',
     section   => 'oslo_middleware',
     param     => 'enable_proxy_headers_parsing',
-    value     => $controller_epoxy::params::enable_proxy_headers_parsing,
+    value     => $controller_epoxy::params::heat_enable_proxy_headers_parsing,
   }
 
   controller_epoxy::configure_heat::do_config { 'heat_policy_file': 
