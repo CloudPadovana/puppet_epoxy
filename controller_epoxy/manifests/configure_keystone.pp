@@ -86,7 +86,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
        
 #######Proxy headers parsing
-  controller_epoxy::configure_keystone::do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone/keystone.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_epoxy::params::enable_proxy_headers_parsing, }
+  controller_epoxy::configure_keystone::do_config { 'keystone_enable_proxy_headers_parsing': conf_file => '/etc/keystone/keystone.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_epoxy::params::keystone_enable_proxy_headers_parsing, }
 
 
 ##  controller_epoxy::configure_keystone::do_config { 'keystone_auth_methods': conf_file => '/etc/keystone/keystone.conf', section => 'auth', param => 'methods', value => $controller_epoxy::params::keystone_auth_methods, }
