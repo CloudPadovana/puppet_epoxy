@@ -1,5 +1,5 @@
 class controller_epoxy::configure_keystone inherits controller_epoxy::params {
-
+##commento per merge###
 #
 # Questa classe:
 # - popola il file /etc/keystone/keystone.conf
