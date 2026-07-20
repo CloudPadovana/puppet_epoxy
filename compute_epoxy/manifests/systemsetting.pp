@@ -84,9 +84,9 @@ include compute_epoxy::params
             }
    }
 
-      $dmi_product_name = dig($facts,'dmi','product','name')
+   $dmi_product_name = dig($facts,'dmi','product','name')
 
-   if ($dmi_product_name == 'PowerEdge M630') {
+   if ($dmi_product_name == 'PowerEdge M620' || $dmi_product_name == 'PowerEdge M630') {
         exec { tx-gre-segmentation:
             command     => "/usr/sbin/ethtool -K eno3 tx-gre-segmentation off tx-gre-csum-segmentation off",
             onlyif =>  "/usr/sbin/ethtool -k eno3 | grep -i gre | grep -i ': on'"
@@ -101,8 +101,5 @@ include compute_epoxy::params
              group       => 'root',
         }
    }
-
-
-
 
 }
