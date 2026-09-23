@@ -104,7 +104,7 @@ class controller_epoxy::configure_horizon inherits controller_epoxy::params {
  
   file { "/etc/systemd/system/httpd.service.d":
     ensure   => directory,
-    owney    => "root",
+    owner   => "root",
     group    => "root",
     mode     => "0755",
   } ->
