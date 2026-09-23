@@ -102,6 +102,15 @@ class controller_epoxy::configure_horizon inherits controller_epoxy::params {
     tag      => ["dashboad_cfg"],
   }
 
+  file { "/etc/systemd/system/httpd.service.d/limits.conf":
+    ensure   => file,
+    owner    => "root",
+    group    => "root",
+    mode     => "0644",
+    content  => file("controller_epoxy/limits.conf"),
+    tag      => ["dashboad_cfg"],
+  }
+
 #  File <| tag == 'dashboad_cfg' |> ~> Service["controller_epoxy::service::httpd"]
 
   ############################################################################
