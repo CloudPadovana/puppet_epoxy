@@ -41,6 +41,16 @@ class controller_epoxy::ceph inherits controller_epoxy::params {
               require => Package["ceph-common"],
          }
 
+      file {'glance-prod-secure.keyring':
+              source      => 'puppet:///modules/controller_epoxy/ceph.client.glance-prod-secure.keyring',
+              path        => '/etc/ceph/ceph.client.glance-prod-secure.keyring',
+              backup      => true,
+              owner   => glance,
+              group   => glance,
+              mode    => "0640",
+              require => Package["ceph-common"],
+         }
+
   }                          
       
   if $::controller_epoxy::cloud_role == "is_test" {
@@ -58,6 +68,15 @@ class controller_epoxy::ceph inherits controller_epoxy::params {
       file {'glance-test.keyring':
               source      => 'puppet:///modules/controller_epoxy/ceph.client.glance-cloudtest.keyring',
               path        => '/etc/ceph/ceph.client.glance-cloudtest.keyring',
+              backup      => true,
+              owner   => glance,
+              group   => glance,
+              mode    => "0640",
+              require => Package["ceph-common"],
+         }
+      file {'glance-test-secure.keyring':
+              source      => 'puppet:///modules/controller_epoxy/ceph.client.glance-cloudtest-secure.keyring',
+              path        => '/etc/ceph/ceph.client.glance-cloudtest-secure.keyring',
               backup      => true,
               owner   => glance,
               group   => glance,
