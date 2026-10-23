@@ -33,6 +33,13 @@ class compute_epoxy::ceph inherits compute_epoxy::params {
              content  => template('compute_epoxy/secret.erb'),
              require => Package["openstack-nova-common"],
           }
+	  
+     file {'secret-secure.xml':
+             path        => '/etc/nova/secret-secure.xml',
+             backup      => true,
+             content  => template('compute_epoxy/secret-secure.erb'),
+             require => Package["openstack-nova-common"],
+          }
 
       $cm = '/usr/bin/virsh secret-define --file /etc/nova/secret.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret'
            
@@ -41,6 +48,7 @@ class compute_epoxy::ceph inherits compute_epoxy::params {
               unless  => "/usr/bin/virsh secret-list | grep -i $compute_epoxy::params::libvirt_rbd_secret_uuid",
               require => File['secret.xml'],
             }
+	    
 
             
       exec { 'set-secret-value virsh':
