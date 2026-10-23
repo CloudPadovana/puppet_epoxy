@@ -4,9 +4,16 @@ class compute_epoxy::ceph inherits compute_epoxy::params {
 #                 ensure => 'installed',
 #}
 
+   exec { "Install ceph-release squid rpm":
+            command => "/usr/bin/rpm -Uvh https://download.ceph.com/rpm-squid/el9/noarch/ceph-release-1-1.el9.noarch.rpm",
+            timeout => 3600,
+            unless => "/bin/rpm -q ceph-release"
+          }->
 
-    exec { "Install ceph 18.2.5":
-         command => "/usr/bin/yum -y install *ceph-common-18.2.5* --enablerepo=epel",
+
+
+    exec { "Install ceph":
+         command => "/usr/bin/yum -y install *ceph-common* --enablerepo=epel",
          unless => "/bin/rpm -q ceph-common",
          timeout => 3600,
   } ->
