@@ -42,7 +42,7 @@ class compute_epoxy::ceph inherits compute_epoxy::params {
           }
 
       $cm = '/usr/bin/virsh secret-define --file /etc/nova/secret.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret'
-      $cm-secure = '/usr/bin/virsh secret-define --file /etc/nova/secret-secure.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret-secure'
+      $cmsecure = '/usr/bin/virsh secret-define --file /etc/nova/secret-secure.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret-secure'
            
       exec { 'get-or-set virsh secret':
               command => $cm,
@@ -51,7 +51,7 @@ class compute_epoxy::ceph inherits compute_epoxy::params {
             }
 	    
       exec { 'get-or-set virsh secret secure':
-              command => $cm-secure,
+              command => $cmsecure,
               unless  => "/usr/bin/virsh secret-list | grep -i $compute_epoxy::params::libvirt_rbd_secret_uuid_secure",
               require => File['secret-secure.xml'],
             }
