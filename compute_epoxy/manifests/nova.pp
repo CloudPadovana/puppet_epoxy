@@ -157,8 +157,8 @@ compute_epoxy::nova::do_config { 'nova_state_path': conf_file => '/etc/nova/nova
   compute_epoxy::nova::do_config { 'nova_libvirt_cpu_mode': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'cpu_mode', value => $compute_epoxy::params::libvirt_cpu_mode, }
 
 ####config di libvirt per utilizzare ceph
-  compute_epoxy::nova::do_config { 'nova_libvirt_rbd_user': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'rbd_user', value => $compute_epoxy::params::libvirt_rbd_user_secure, }
-  compute_epoxy::nova::do_config { 'nova_libvirt_rbd_secret_uuid': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'rbd_secret_uuid', value => $compute_epoxy::params::libvirt_rbd_secret_uuid_secure, }
+  compute_epoxy::nova::do_config { 'nova_libvirt_rbd_user': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'rbd_user', value => $compute_epoxy::params::libvirt_rbd_user, }
+  compute_epoxy::nova::do_config { 'nova_libvirt_rbd_secret_uuid': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'rbd_secret_uuid', value => $compute_epoxy::params::libvirt_rbd_secret_uuid, }
 
   compute_epoxy::nova::do_config { 'nova_cinder_ssl_ca_file': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'ssl_ca_file', value => $compute_epoxy::params::cafile, }
   compute_epoxy::nova::do_config { 'nova_cinder_cafile': conf_file => '/etc/nova/nova.conf', section => 'cinder', param => 'cafile', value => $compute_epoxy::params::cafile, }

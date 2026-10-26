@@ -34,15 +34,8 @@ class compute_epoxy::ceph inherits compute_epoxy::params {
              require => Package["openstack-nova-common"],
           }
 	  
-     file {'secret-secure.xml':
-             path        => '/etc/nova/secret-secure.xml',
-             backup      => true,
-             content  => template('compute_epoxy/secret-secure.erb'),
-             require => Package["openstack-nova-common"],
-          }
 
       $cm = '/usr/bin/virsh secret-define --file /etc/nova/secret.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret'
-      $cmsecure = '/usr/bin/virsh secret-define --file /etc/nova/secret-secure.xml | /usr/bin/awk \'{print $2}\' | sed \'/^$/d\' > /etc/nova/virsh.secret-secure'
            
       exec { 'get-or-set virsh secret':
               command => $cm,
@@ -50,13 +43,7 @@ class compute_epoxy::ceph inherits compute_epoxy::params {
               require => File['secret.xml'],
             }
 	    
-      exec { 'get-or-set virsh secret secure':
-              command => $cmsecure,
-              unless  => "/usr/bin/virsh secret-list | grep -i $compute_epoxy::params::libvirt_rbd_secret_uuid_secure",
-              require => File['secret-secure.xml'],
-            }
 	    
-
             
       exec { 'set-secret-value virsh':
           command => "/usr/bin/virsh secret-set-value --secret $compute_epoxy::params::libvirt_rbd_secret_uuid --base64 $compute_epoxy::params::libvirt_rbd_key",
@@ -64,10 +51,5 @@ class compute_epoxy::ceph inherits compute_epoxy::params {
         require => Exec['get-or-set virsh secret'],
            }
 	   
-      exec { 'set-secret-value virsh secure':
-          command => "/usr/bin/virsh secret-set-value --secret $compute_epoxy::params::libvirt_rbd_secret_uuid_secure --base64 $compute_epoxy::params::libvirt_rbd_key_secure",
-        unless  => "/usr/bin/virsh secret-get-value $compute_epoxy::params::libvirt_rbd_secret_uuid_secure | grep $compute_epoxy::params::libvirt_rbd_key_secure",
-        require => Exec['get-or-set virsh secret secure'],
-           }
               
 }
