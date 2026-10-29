@@ -39,15 +39,6 @@ class controller_epoxy::ceph inherits controller_epoxy::params {
               require => Package["ceph-common"],
            }
 
-      file {'cinder-prod-secure.keyring':
-              source      => 'puppet:///modules/controller_epoxy/ceph.client.cinder-prod-secure.keyring',
-              path        => '/etc/ceph/ceph.client.cinder-prod-secure.keyring',
-              backup      => true,
-              owner   => cinder,
-              group   => cinder,
-              mode    => "0640",
-              require => Package["ceph-common"],
-           }
 
       file {'glance-prod.keyring':
               source      => 'puppet:///modules/controller_epoxy/ceph.client.glance-prod.keyring',
@@ -83,15 +74,6 @@ class controller_epoxy::ceph inherits controller_epoxy::params {
               require => Package["ceph-common"],
            }
 	   
-      file {'cinder-cloudtest-secure.keyring':
-              source      => 'puppet:///modules/controller_epoxy/ceph.client.cinder-cloudtest-secure.keyring',
-              path        => '/etc/ceph/ceph.client.cinder-cloudtest-secure.keyring',
-              backup      => true,
-              owner   => cinder,
-              group   => cinder,
-              mode    => "0640",
-              require => Package["ceph-common"],
-           }
 
       file {'glance-test.keyring':
               source      => 'puppet:///modules/controller_epoxy/ceph.client.glance-cloudtest.keyring',
